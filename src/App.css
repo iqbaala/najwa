@@ -324,3 +324,54 @@ body {
     padding: 10px 0;
   }
 }
+
+/* Tambahkan media query untuk tampilan mobile */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  h2 {
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  p {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+  .card, .feature-card {
+    width: 100% !important;
+    margin: 10px 0 !important;
+    box-sizing: border-box;
+  }
+  .feature-list, .card-list {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+  }
+  .upload-button {
+    padding: 10px 0;
+    width: 100%;
+    font-size: 1rem;
+  }
+  .footer {
+    padding: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .info-section {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+  }
+  .info-card {
+    width: 100% !important;
+    margin: 10px 0 !important;
+    box-sizing: border-box;
+  }
+}
