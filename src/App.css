@@ -36,3 +36,291 @@
     transform: rotate(360deg);
   }
 }
+
+/* Tema biru modern untuk EzCompres agar mirip iLovePDF */
+body {
+  background: #f4f8fb;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  color: #1565c0;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #1565c033;
+}
+
+.main-subtitle {
+  font-size: 1.5rem;
+  color: #357ae8;
+  margin-bottom: 40px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #1565c022, 0 1.5px 6px #1565c033;
+  padding: 48px 36px 36px 36px;
+  min-width: 350px;
+  transition: box-shadow 0.2s;
+}
+.upload-section:hover {
+  box-shadow: 0 8px 32px #1565c044, 0 2px 8px #1565c055;
+}
+
+.upload-btn {
+  background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+  color: #fff;
+  font-size: 2rem;
+  border: none;
+  border-radius: 12px;
+  padding: 18px 48px;
+  cursor: pointer;
+  margin-bottom: 16px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px #1976d233;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+.upload-btn:hover {
+  background: linear-gradient(90deg, #1565c0 0%, #64b5f6 100%);
+  box-shadow: 0 4px 16px #1976d244;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.drag-drop-text {
+  color: #1976d2;
+  font-size: 1rem;
+  margin-top: 8px;
+  opacity: 0.8;
+}
+
+/* Navbar custom */
+.MuiAppBar-root {
+  background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+  color: #fff;
+  box-shadow: 0 2px 12px #1976d233;
+}
+.MuiToolbar-root {
+  min-height: 64px;
+}
+.MuiButton-root {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.MuiButton-root:hover {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+.MuiButton-containedError {
+  background: #1976d2 !important;
+  color: #fff !important;
+}
+.MuiButton-containedError:hover {
+  background: #1565c0 !important;
+}
+.MuiButton-outlinedError {
+  border-color: #1976d2 !important;
+  color: #1976d2 !important;
+}
+.MuiButton-outlinedError:hover {
+  background: #e3f2fd !important;
+  border-color: #1565c0 !important;
+  color: #1565c0 !important;
+}
+
+.info-section {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-bottom: 32px;
+  margin-top: 16px;
+}
+.info-card {
+  background: #e3f2fd;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px #1976d211;
+  padding: 24px 32px 18px 32px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.15s;
+  color: #1976d2;
+  animation: fadeInUp 0.7s;
+}
+.info-card:hover {
+  box-shadow: 0 6px 24px #1976d233;
+  transform: translateY(-4px) scale(1.04);
+}
+.info-card h3 {
+  color: #1976d2;
+}
+.info-card p {
+  color: #357ae8;
+}
+
+.explain-section, .about-section {
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: 10px;
+  padding: 14px 22px;
+  font-size: 1.08rem;
+  box-shadow: 0 1px 6px #1976d211;
+  max-width: 500px;
+  text-align: center;
+  margin: 24px auto 0 auto;
+  animation: fadeIn 1s;
+}
+
+.about-section {
+  margin-top: 36px;
+  border-radius: 16px;
+  padding: 24px 32px 18px 32px;
+  font-size: 1.08rem;
+  box-shadow: 0 1px 6px #1976d211;
+  max-width: 420px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: #e3f2fd;
+  color: #1565c0;
+  animation: fadeIn 1.2s;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.about-section:hover {
+  box-shadow: 0 6px 24px #1976d233;
+  transform: translateY(-4px) scale(1.03);
+}
+
+.about-avatar {
+  margin-bottom: 4px;
+}
+.about-title {
+  color: #1565c0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.about-names {
+  color: #1976d2;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.about-desc {
+  color: #357ae8;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+.about-bio {
+  color: #1976d2;
+  font-size: 1.08rem;
+  background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 12px;
+  padding: 18px 24px;
+  box-shadow: 0 2px 12px #1976d211;
+  border: 1.5px solid #90caf9;
+  font-weight: 500;
+  text-align: center;
+  animation: fadeInUp 1.2s;
+  letter-spacing: 0.2px;
+  margin-bottom: 18px;
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.about-skills {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  animation: fadeInUp 1.3s;
+}
+.skill-badge {
+  background: #fff;
+  color: #1976d2;
+  border: 1.5px solid #90caf9;
+  border-radius: 20px;
+  padding: 10px 22px 10px 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 1px 6px #1976d211;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
+  animation: fadeInUp 1.4s;
+  margin-bottom: 10px;
+}
+.skill-badge:hover {
+  background: #1976d2;
+  color: #fff;
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 4px 16px #1976d244;
+}
+
+.footer {
+  width: 100%;
+  background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+  color: #fff;
+  text-align: center;
+  padding: 18px 0 10px 0;
+  font-size: 1rem;
+  margin-top: 48px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 -2px 12px #1976d233;
+  animation: fadeIn 1.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 600px) {
+  .about-section {
+    max-width: 98vw;
+    padding: 16px 4vw 12px 4vw;
+  }
+  .about-bio {
+    font-size: 0.98rem;
+    padding: 12px 6vw;
+  }
+  .about-skills {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-badge {
+    width: 90vw;
+    max-width: 320px;
+    justify-content: center;
+    font-size: 0.98rem;
+    padding: 10px 0;
+  }
+}
