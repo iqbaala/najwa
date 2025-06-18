@@ -14,6 +14,7 @@ import BrushIcon from '@mui/icons-material/Brush';
 import WebIcon from '@mui/icons-material/Web';
 import StorageIcon from '@mui/icons-material/Storage';
 import './App.css';
+import { motion } from 'framer-motion';
 
 function dataURLtoBlob(dataurl) {
   if (!dataurl || typeof dataurl !== 'string' || !dataurl.startsWith('data:')) return new Blob();
@@ -156,48 +157,54 @@ function Home() {
 
   return (
     <div className="main-content">
-      <h1 className="main-title">Selamat Datang di EzCompres</h1>
-      <p className="main-subtitle">Kompres file Anda secara lokal, cepat, dan aman!</p>
-      <div className="info-section">
-        <div className="info-card">
-          <ImageIcon style={{ fontSize: 40, color: '#1976d2' }} />
-          <h3>Foto</h3>
-          <p>Format: JPG, PNG, WEBP</p>
-        </div>
-        <div className="info-card">
-          <VideoLibraryIcon style={{ fontSize: 40, color: '#1976d2' }} />
-          <h3>Video</h3>
-          <p>Format: MP4, WEBM</p>
-        </div>
-        <div className="info-card">
-          <DescriptionIcon style={{ fontSize: 40, color: '#1976d2' }} />
-          <h3>File</h3>
-          <p>Format: PDF, ZIP, DOCX, PPTX, dan lainnya</p>
-        </div>
-      </div>
-      <div className="upload-section" style={{ marginTop: 32 }}>
+      <motion.h1 className="main-title" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>Selamat Datang di EzCompres</motion.h1>
+      <motion.p className="main-subtitle" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>Kompres file Anda secara lokal, cepat, dan aman!</motion.p>
+      <motion.div className="info-section" initial="hidden" animate="visible" variants={{hidden: {}, visible: {transition: {staggerChildren: 0.15}}}}>
+        <motion.div className="info-card" variants={{hidden: {opacity: 0, y: 40}, visible: {opacity: 1, y: 0}}} whileHover={{ scale: 1.06, boxShadow: '0 8px 32px #1976d244' }}>
+          <ImageIcon className="icon" />
+          <div className="info-card-content">
+            <h3>Foto</h3>
+            <p>Format: JPG, PNG, WEBP</p>
+          </div>
+        </motion.div>
+        <motion.div className="info-card" variants={{hidden: {opacity: 0, y: 40}, visible: {opacity: 1, y: 0}}} whileHover={{ scale: 1.06, boxShadow: '0 8px 32px #1976d244' }}>
+          <VideoLibraryIcon className="icon" />
+          <div className="info-card-content">
+            <h3>Video</h3>
+            <p>Format: MP4, WEBM</p>
+          </div>
+        </motion.div>
+        <motion.div className="info-card" variants={{hidden: {opacity: 0, y: 40}, visible: {opacity: 1, y: 0}}} whileHover={{ scale: 1.06, boxShadow: '0 8px 32px #1976d244' }}>
+          <DescriptionIcon className="icon" />
+          <div className="info-card-content">
+            <h3>File</h3>
+            <p>Format: PDF, ZIP, DOCX, PPTX</p>
+          </div>
+        </motion.div>
+      </motion.div>
+      <motion.div className="upload-section" style={{ marginTop: 32 }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7, delay: 0.3 }}>
         <button className="upload-btn" onClick={handleButtonClick}>Pilih file untuk mulai kompres</button>
         <input type="file" multiple style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange} />
         <p className="drag-drop-text">atau jatuhkan file di sini</p>
-      </div>
+      </motion.div>
       {resultInfo.length > 0 && (
-        <div style={{ margin: '32px auto', maxWidth: 500, background: '#e3f2fd', borderRadius: 12, padding: 18, boxShadow: '0 2px 8px #1976d233' }}>
+        <motion.div style={{ margin: '32px auto', maxWidth: 500, background: '#e3f2fd', borderRadius: 12, padding: 18, boxShadow: '0 2px 8px #1976d233' }} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <b>Hasil Kompresi:</b>
           <ul style={{ textAlign: 'left', marginTop: 12 }}>
             {resultInfo.map((f, i) => (
-              <li key={i} style={{ marginBottom: 8 }}>
+              <motion.li key={i} style={{ marginBottom: 8 }} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}>
                 <span style={{ color: '#1976d2', fontWeight: 600 }}>{f.name}</span> &rarr; <span style={{ color: '#357ae8' }}>{(f.kompres/1024).toFixed(1)} KB</span> ({f.persen}% dari asli)
                 {f.type === 'other' && <span style={{ color: '#b71c1c', marginLeft: 8 }}>(file non-gambar, hanya di-zip)</span>}
                 {f.type === 'image' && f.status === 'gagal' && <span style={{ color: '#b71c1c', marginLeft: 8 }}>(gagal kompres, file asli dimasukkan)</span>}
-              </li>
+              </motion.li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       )}
-      <div className="explain-section">
+      <motion.div className="explain-section" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.4 }}>
         <InfoOutlinedIcon style={{ color: '#1976d2', marginRight: 8 }} />
         <span>Semua proses kompresi dilakukan secara lokal di perangkat Anda, tanpa upload ke server.</span>
-      </div>
+      </motion.div>
       <div className="about-section">
         <div className="about-avatar">
           <PersonIcon style={{ fontSize: 48, color: '#1976d2' }} />
