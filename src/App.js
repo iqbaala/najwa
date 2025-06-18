@@ -32,7 +32,7 @@ function Home() {
     fileInputRef.current.click();
   };
 
-  // Kompres gambar ke target 40% lebih kecil
+  // Kompres gambar ke ukuran lebih kecil dari asli (paksa kualitas rendah jika perlu)
   const compressImage = (file, callback) => {
     const reader = new FileReader();
     reader.onload = (ev) => {
@@ -40,8 +40,10 @@ function Home() {
       img.src = ev.target.result;
       img.onload = () => {
         try {
-          let q = 0.8, minQ = 0.1, maxQ = 1.0, best = { dataUrl: '', size: file.size, q: 1 };
-          for (let i = 0; i < 10; i++) {
+          let minQ = 0.05, maxQ = 1.0, best = { dataUrl: '', size: file.size, q: 1 };
+          let found = false;
+          for (let i = 0; i < 15; i++) {
+            let q = maxQ - (i * (maxQ - minQ) / 14); // turunkan kualitas bertahap
             const canvas = document.createElement('canvas');
             canvas.width = img.naturalWidth;
             canvas.height = img.naturalHeight;
@@ -49,13 +51,26 @@ function Home() {
             ctx.drawImage(img, 0, 0);
             const dataUrl = canvas.toDataURL('image/jpeg', q);
             const blob = dataURLtoBlob(dataUrl);
-            if (blob.size <= file.size * 0.6) {
+            if (blob.size < file.size * 0.9) { // minimal 10% lebih kecil
               best = { dataUrl, size: blob.size, q };
-              maxQ = q;
-              q = (q + minQ) / 2;
-            } else {
-              minQ = q;
-              q = (q + maxQ) / 2;
+              found = true;
+              break;
+            }
+            if (blob.size < best.size) {
+              best = { dataUrl, size: blob.size, q };
+            }
+          }
+          // Jika tidak pernah lebih kecil, paksa kualitas paling rendah
+          if (!found) {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            const dataUrl = canvas.toDataURL('image/jpeg', minQ);
+            const blob = dataURLtoBlob(dataUrl);
+            if (blob.size < best.size) {
+              best = { dataUrl, size: blob.size, q: minQ };
             }
           }
           callback(best, file);
@@ -74,10 +89,7 @@ function Home() {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
     setResultInfo([]);
-    const JSZip = (await import('jszip')).default;
-    const zip = new JSZip();
     let infoArr = [];
-    let processed = 0;
     for (const file of files) {
       if (file.type.startsWith('image/')) {
         // Kompres gambar
@@ -85,15 +97,26 @@ function Home() {
           compressImage(file, (best, origFile) => {
             let blob;
             let status = 'sukses';
+            let fileName = origFile.name.replace(/\.[^/.]+$/, '') + '-kompres.jpg';
             if (best.dataUrl && best.size < origFile.size) {
               blob = dataURLtoBlob(best.dataUrl);
-              zip.file(origFile.name.replace(/\.[^/.]+$/, '') + '-kompres.jpg', blob);
             } else {
-              // Jika gagal kompres, masukkan file asli
+              // Jika gagal kompres, pakai file asli
               blob = origFile;
-              zip.file(origFile.name, origFile);
+              fileName = origFile.name;
               status = 'gagal';
             }
+            // Download file hasil kompresi
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }, 100);
             infoArr.push({
               name: origFile.name,
               asli: origFile.size,
@@ -102,13 +125,21 @@ function Home() {
               type: 'image',
               status
             });
-            processed++;
             resolve();
           });
         });
       } else {
-        // File lain, langsung masukkan ke zip
-        zip.file(file.name, file);
+        // File lain, langsung download file aslinya
+        const url = URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.name;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 100);
         infoArr.push({
           name: file.name,
           asli: file.size,
@@ -117,21 +148,8 @@ function Home() {
           type: 'other',
           status: 'sukses'
         });
-        processed++;
       }
     }
-    const blob = await zip.generateAsync({ type: 'blob' });
-    // Download hasil ZIP
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'hasil-kompres.zip';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 100);
     setResultInfo(infoArr);
     e.target.value = '';
   };
@@ -187,12 +205,12 @@ function Home() {
         <div className="about-text">
           <b className="about-title">Tentang Pembuat:</b><br />
           <span className="about-names">Najwa dan Alys</span><br />
-          <span className="about-desc">Mahasiswa Unisnu Jepara<br />Prodi Teknik Informatika Semester 4</span>
+          
           <div className="about-bio">Kami adalah mahasiswa yang antusias di bidang teknologi dan pengembangan web, berkomitmen membuat aplikasi bermanfaat untuk semua.</div>
           <div className="about-skills">
-            <div className="skill-badge"><BrushIcon style={{verticalAlign:'middle', color:'#1976d2'}}/> Design Dasar</div>
+            <div className="skill-badge"><BrushIcon style={{verticalAlign:'middle', color:'#1976d2'}}/> Web Design</div>
             <div className="skill-badge"><WebIcon style={{verticalAlign:'middle', color:'#1976d2'}}/> Web Developer</div>
-            <div className="skill-badge"><StorageIcon style={{verticalAlign:'middle', color:'#1976d2'}}/> Database</div>
+            <div className="skill-badge"><StorageIcon style={{verticalAlign:'middle', color:'#1976d2'}}/> Programmer</div>
           </div>
         </div>
       </div>
